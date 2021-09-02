@@ -31,15 +31,15 @@ close(fileConn)
 
 ex_yaml_read = yaml::read_yaml(ex_yaml_tmpfile)
 
-if_onbrand_hex_png           = system.file(package="onbrand","figures","onbrand_hex.png")
-if_ppt_workflow_output_png   = system.file(package="onbrand","figures","ppt_workflow_output.png")
-if_doc_workflow_output_png   = system.file(package="onbrand","figures","doc_workflow_output.png")
-b64_onbrand_hex_png          = knitrdata::data_encode(if_onbrand_hex_png         , encoding="base64")
-b64_ppt_workflow_output_png  = knitrdata::data_encode(if_ppt_workflow_output_png , encoding="base64")
-b64_doc_workflow_output_png  = knitrdata::data_encode(if_doc_workflow_output_png , encoding="base64")
+# if_onbrand_hex_png           = system.file(package="onbrand","figures","onbrand_hex.png")
+# if_ppt_workflow_output_png   = system.file(package="onbrand","figures","ppt_workflow_output.png")
+# if_doc_workflow_output_png   = system.file(package="onbrand","figures","doc_workflow_output.png")
+# b64_onbrand_hex_png          = knitrdata::data_encode(if_onbrand_hex_png         , encoding="base64")
+# b64_ppt_workflow_output_png  = knitrdata::data_encode(if_ppt_workflow_output_png , encoding="base64")
+# b64_doc_workflow_output_png  = knitrdata::data_encode(if_doc_workflow_output_png , encoding="base64")
 ```
 
-# Introduction <img src="data:image/png;base64,`r b64_onbrand_hex_png`" align="right" height="138.5" border="0px" />
+# Introduction <img src="onbrand_hex.png" align="right" height="138.5" border="0px" />
 
 The ``officer`` package is used to generate all of the underlying PowerPoint and Word documents. The purpose of `onbrand` is to provide an abstraction layer (or mapping) for the functions in ``officer`` in order to allow the same reporting workflow to be used with different template documents. This involves providing a consistent customizable method to interact with templates as well as a form of markdown to control the formatting of text. 
 
@@ -234,12 +234,18 @@ save_report(obnd, tempfile(fileext=".pptx")
 ```
 
 Which should look something like this:
-
-![Example PowerPoint output for workflow above.](data:image/png;base64,`r b64_ppt_workflow_output_png`){width=600px}
+![Example PowerPoint output for workflow above.](ppt_workflow_output.png){width=600px} 
 
 ### Accessing the PowerPoint mapping information
 
-If you do not want to use the interfaces above for creating slides but would like to use the named mapping information in a more traditional `officer` workflow you can use the function `fph`. After you've loaded the onbrand object above (`obnd`) you can then pull out the placeholder label from PowerPoint for any named placeholder in a template layout specified in the yaml mapping file. For example if we wanted the placeholder label for the `content_left_header` in the `two_content_header_text` layout we would use the following:
+Sometimes it can be difficult to remember the template and placeholder names from the mapping file. You and use the `onbrand::template_details` function to show this information for the current `onbrand` object.
+
+```{r, message=TRUE}
+details = template_details(obnd) 
+```
+
+
+If you do not want to use the interfaces above for creating slides but would like to use the named mapping information in a more traditional `officer` workflow you can use the function `fph`. After you've loaded the `onbrand` object above (`obnd`) you can then pull out the placeholder label from PowerPoint for any named placeholder in a template layout specified in the yaml mapping file. For example if we wanted the placeholder label for the `content_left_header` in the `two_content_header_text` layout we would use the following:
 
 ```{r}
 ph = fph(obnd, "two_content_header_text", "content_left_header")$pl
@@ -530,7 +536,25 @@ save_report(obnd, tempfile(fileext=".docx")
 
 The output from the example above should look like this:
 
-![Example Word output for workflow above.](data:image/png;base64,`r b64_doc_workflow_output_png`){width=600px}
+![Example Word output for workflow above.](doc_workflow_output.png){width=600px}
+
+### Accessing the Word mapping information
+
+It can also be useful to quickly access the `onbrand` style names. You can use the same `onbrand::template_details` function to display the current styles available to you:
+
+```{r, message=TRUE}
+details = template_details(obnd) 
+```
+
+As with the PowerPoint interface, you can also access the named Word mapping directly. This is done through the `fst` function. With the `onbrand` objected loaded (`obnd`) you can supply an `onbrand` style name and pull out the Word style name (`wsn`) and the default font format (`dff`):
+
+```{r}
+st = fst(obnd, "Heading_3")
+#Word style name
+wsn = st$wsn
+# Default font format
+dff = st$dff
+```
 
 ## Formatting with markdown
 
@@ -623,28 +647,15 @@ obnd = report_add_doc_content(obnd,
                   caption  = "Flextable object with custom Markdown - created by the user."))
 ```
 
-### Accessing the Word mapping information
-
-As with the PowerPoint interface, you can also access the named Word mapping directly. This is done through the `fst` function. With the onbrand objected loaded (`obnd`) you can supply an onbrand style name and pull out the Word style name (`wsn`) and the default font format (`dff`):
-
-```{r}
-st = fst(obnd, "Heading_3")
-#Word style name
-wsn = st$wsn
-# Default font format
-dff = st$dff
-```
-
-
 ## Accessing the `officer` object directly
 
-Sometimes you need more control over creating a report, and you may want to use the officer commands directly. To do this you can use the function `fetch_officer_object()`` to pull out the officer object from the onbrand object:
+Sometimes you need more control over creating a report, and you may want to use the officer commands directly. To do this you can use the function `fetch_officer_object()`` to pull out the officer object from the `onbrand` object:
 
 ```{r echo=FALSE}
 rpt = fetch_officer_object(obnd)$rpt
 ```
 
-Now you can use any officer command you wish on the `rpt` object. And when you're done you can put the object back into the onbrand object using `set_officer_object()`:
+Now you can use any officer command you wish on the `rpt` object. And when you're done you can put the object back into the `onbrand` object using `set_officer_object()`:
 
 ```{r echo=FALSE}
 obnd = set_officer_object(obnd, rpt)

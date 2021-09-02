@@ -22,12 +22,12 @@ close(fileConn)
 
 ex_yaml_read = yaml::read_yaml(ex_yaml_tmpfile)
 
-if_onbrand_hex_png           = system.file(package="onbrand","figures","onbrand_hex.png")
-if_ppt_workflow_output_png   = system.file(package="onbrand","figures","ppt_workflow_output.png")
-if_doc_workflow_output_png   = system.file(package="onbrand","figures","doc_workflow_output.png")
-b64_onbrand_hex_png          = knitrdata::data_encode(if_onbrand_hex_png         , encoding="base64")
-b64_ppt_workflow_output_png  = knitrdata::data_encode(if_ppt_workflow_output_png , encoding="base64")
-b64_doc_workflow_output_png  = knitrdata::data_encode(if_doc_workflow_output_png , encoding="base64")
+# if_onbrand_hex_png           = system.file(package="onbrand","figures","onbrand_hex.png")
+# if_ppt_workflow_output_png   = system.file(package="onbrand","figures","ppt_workflow_output.png")
+# if_doc_workflow_output_png   = system.file(package="onbrand","figures","doc_workflow_output.png")
+# b64_onbrand_hex_png          = knitrdata::data_encode(if_onbrand_hex_png         , encoding="base64")
+# b64_ppt_workflow_output_png  = knitrdata::data_encode(if_ppt_workflow_output_png , encoding="base64")
+# b64_doc_workflow_output_png  = knitrdata::data_encode(if_doc_workflow_output_png , encoding="base64")
 
 ## -----------------------------------------------------------------------------
 obnd = read_template(
@@ -133,6 +133,9 @@ obnd = report_add_slide(obnd,
 
 ## ---- eval=FALSE, echo=FALSE--------------------------------------------------
 #  save_report(obnd, tempfile(fileext=".pptx")
+
+## ---- message=TRUE------------------------------------------------------------
+details = template_details(obnd) 
 
 ## -----------------------------------------------------------------------------
 ph = fph(obnd, "two_content_header_text", "content_left_header")$pl
@@ -299,6 +302,16 @@ obnd = report_add_doc_content(obnd,
 ## ---- eval=FALSE, echo=FALSE--------------------------------------------------
 #  save_report(obnd, tempfile(fileext=".docx")
 
+## ---- message=TRUE------------------------------------------------------------
+details = template_details(obnd) 
+
+## -----------------------------------------------------------------------------
+st = fst(obnd, "Heading_3")
+#Word style name
+wsn = st$wsn
+# Default font format
+dff = st$dff
+
 ## -----------------------------------------------------------------------------
 data = data.frame(property = c("mean",   "variance"),
                   length     = c(200,      0.13),
@@ -345,13 +358,6 @@ ft = ft %>%
 
 ## ----echo=FALSE---------------------------------------------------------------
 htmltools_value(ft)
-
-## -----------------------------------------------------------------------------
-st = fst(obnd, "Heading_3")
-#Word style name
-wsn = st$wsn
-# Default font format
-dff = st$dff
 
 ## ----echo=FALSE---------------------------------------------------------------
 rpt = fetch_officer_object(obnd)$rpt

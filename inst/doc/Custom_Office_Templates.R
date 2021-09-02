@@ -25,17 +25,14 @@ close(fileConn)
 
 ex_yaml_read = yaml::read_yaml(ex_yaml_tmpfile)
 
-if_onbrand_hex_png                  = system.file(package="onbrand","figures","onbrand_hex.png")
-if_example_layout_ppt_master_png    = system.file(package="onbrand","figures","example_layout_ppt_master.png")
-if_example_layout_yaml_pptx_png     = system.file(package="onbrand","figures","example_layout_yaml_pptx.png")
-if_example_layout_docx_png          = system.file(package="onbrand","figures","example_layout_docx.png")
-
-b64_onbrand_hex_png                 = knitrdata::data_encode(if_onbrand_hex_png               , encoding="base64")
-b64_example_layout_ppt_master_png   = knitrdata::data_encode(if_example_layout_ppt_master_png , encoding="base64")
-b64_example_layout_yaml_pptx_png    = knitrdata::data_encode(if_example_layout_yaml_pptx_png  , encoding="base64")
-b64_example_layout_docx_png         = knitrdata::data_encode(if_example_layout_docx_png       , encoding="base64")
-
-
+# if_onbrand_hex_png                  = system.file(package="onbrand","figures","onbrand_hex.png")
+# if_example_layout_ppt_master_png    = system.file(package="onbrand","figures","example_layout_ppt_master.png")
+# if_example_layout_yaml_pptx_png     = system.file(package="onbrand","figures","example_layout_yaml_pptx.png")
+# if_example_layout_docx_png          = system.file(package="onbrand","figures","example_layout_docx.png")
+# b64_onbrand_hex_png                 = knitrdata::data_encode(if_onbrand_hex_png               , encoding="base64")
+# b64_example_layout_ppt_master_png   = knitrdata::data_encode(if_example_layout_ppt_master_png , encoding="base64")
+# b64_example_layout_yaml_pptx_png    = knitrdata::data_encode(if_example_layout_yaml_pptx_png  , encoding="base64")
+# b64_example_layout_docx_png         = knitrdata::data_encode(if_example_layout_docx_png       , encoding="base64")
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  library(onbrand)
