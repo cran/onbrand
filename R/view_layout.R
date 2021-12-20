@@ -8,7 +8,7 @@
 #'@importFrom officer body_end_section_landscape body_end_section_portrait body_replace_all_text external_img
 #'@importFrom officer footers_replace_all_text fpar ftext headers_replace_all_text layout_properties layout_summary ph_location_type
 #'@importFrom officer ph_location_label ph_with read_pptx read_docx shortcuts  slip_in_seqfield slip_in_text
-#'@importFrom officer run_autonum styles_info unordered_list
+#'@importFrom officer run_autonum run_bookmark run_reference styles_info unordered_list
 #'@importFrom stringr str_locate_all
 #'@importFrom dplyr filter
 #'@importFrom yaml read_yaml
@@ -16,16 +16,18 @@
 
 #'@export
 #'@title Generate Annotated Layout for Report Templates
-#'@description Elements of slide masters are identified by placeholder labels.
-#' As PowerPoint masters are created the labels
-#' can be difficult to predict. Word documents are identified by style names.
-#' This function will create a layout file identifying all of the elements of
-#' each slide master for a PowerPoint template or each paragraph and table
-#' style for a Word template.
+#'@description Produces a report with each layout element labeled.  
 #'
 #'@param template Name of PowerPoint or Word file to annotate (defaults to included PoerPoint template)
 #'@param output_file name of file to place the annotated layout information, set to \code{NULL} and it will generate a file named layout with the appropriate extension
 #'@param verbose Boolean variable when set to TRUE (default) messages will be
+#'
+#'@details Generates an Annotated report based on the template provided.  
+#'Elements of slide masters are identified by placeholder labels. As PowerPoint 
+#'masters are created the labels can be difficult to predict. Word documents are 
+#'identified by style names. This function will create a layout file identifying 
+#'all of the elements of each slide master for a PowerPoint template or each 
+#'paragraph and table style for a Word template.
 #'
 #'@return List with the following elements
 #' \itemize{

@@ -85,9 +85,9 @@ obnd = report_add_slide(obnd,
                                  type     = "imagefile")))
 
 ## -----------------------------------------------------------------------------
-tdf =    data.frame(Parameters = c("Length", "Width", "Height"),
-                    Values     = 1:3,
-                    Units      = c("m", "m", "m") )
+tdf = data.frame(Parameters = c("Length", "Width", "Height"),
+                 Values     = 1:3,
+                 Units      = c("m", "m", "m") )
 
 ## -----------------------------------------------------------------------------
 tab_cont = list(table = tdf)
@@ -147,6 +147,21 @@ obnd = read_template(
 
 ## -----------------------------------------------------------------------------
 obnd = report_add_doc_content(obnd,
+  type     = "toc",
+  content  = list(level=3))
+
+## -----------------------------------------------------------------------------
+obnd = report_add_doc_content(obnd,
+  type     = "toc",
+  content  = list(style="Table_Caption"))
+
+## -----------------------------------------------------------------------------
+obnd = report_add_doc_content(obnd,
+  type     = "toc",
+  content  = list(style="Figure_Caption"))
+
+## -----------------------------------------------------------------------------
+obnd = report_add_doc_content(obnd,
   type     = "text",
   content  = list(text="Text with no style specified will use the doc_def text format. This is a 'ph' placehoder for text: ===BODY-TEXT-EXAMPLE=== [see Placeholder text section below]"))
 
@@ -184,6 +199,7 @@ obnd = report_add_doc_content(obnd,
   content  = list(text   = mdtext,
                   format = "md",
                   style  = "Normal"))
+
 
 ## -----------------------------------------------------------------------------
 p = ggplot() + annotate("text", x=0, y=0, label = "picture example")
@@ -299,8 +315,32 @@ obnd = report_add_doc_content(obnd,
   type     = "section",
   content  = list(section_type  ="portrait"))
 
+## -----------------------------------------------------------------------------
+obnd = report_add_doc_content(obnd,
+  type     = "ggplot",
+  content  = list(image           = p,
+                  notes_format    = "text",
+                  key             = "ex_fig_text",
+                  notes           = "This figure shows how to use text captions _and_ notes",
+                  caption_format  = "text",
+                  caption         = "Multi-page figure (page 1)"))
+
+obnd = report_add_doc_content(obnd,
+  type     = "break",
+  content  = NULL)
+
+obnd = report_add_doc_content(obnd,
+  type     = "ggplot",
+  content  = list(image           = p,
+                  notes_format    = "text",
+                  key             = "ex_fig_text",
+                  notes           = "This figure shows how to use text captions _and_ notes",
+                  caption_format  = "text",
+                  caption         = "Multi-page figure (page 2)"))
+
 ## ---- eval=FALSE, echo=FALSE--------------------------------------------------
-#  save_report(obnd, tempfile(fileext=".docx")
+#  of = tempfile(fileext=".docx")
+#  save_report(obnd, of)
 
 ## ---- message=TRUE------------------------------------------------------------
 details = template_details(obnd) 
@@ -358,6 +398,12 @@ ft = ft %>%
 
 ## ----echo=FALSE---------------------------------------------------------------
 htmltools_value(ft)
+
+## -----------------------------------------------------------------------------
+obnd = report_add_doc_content(obnd,
+  type     = "flextable_object",
+  content  = list(ft=tab_fto,
+                  caption  = "Flextable object with custom Markdown - created by the user."))
 
 ## ----echo=FALSE---------------------------------------------------------------
 rpt = fetch_officer_object(obnd)$rpt
