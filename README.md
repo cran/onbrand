@@ -1,13 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# onbrand <img src="man/figures/onbrand_logo.png" align="right" height="138.5" />
+# onbrand <img src="man/figures/logo.png" align="right" height="138.5" />
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/john-harrold/onbrand/workflows/R-CMD-check/badge.svg)](https://github.com/john-harrold/onbrand/actions)
 [![CRAN
-checks](https://cranchecks.info/badges/summary/onbrand)](https://cran.r-project.org/web/checks/check_results_onbrand.html)
+checks](https://badges.cranchecks.info/worst/onbrand.svg)](https://cran.r-project.org/web/checks/check_results_onbrand.html)
+[![version](https://www.r-pkg.org/badges/version/onbrand)](https://CRAN.R-project.org/package=onbrand)
+![cranlogs](https://cranlogs.r-pkg.org/badges/onbrand)
+![Active](https://www.repostatus.org/badges/latest/active.svg)
 <!-- badges: end -->
 
 The `officer` package provides extensive methods for accessing,
@@ -37,8 +40,11 @@ And the development version from
 [GitHub](https://github.com/john-harrold/onbrand) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("john-harrold/onbrand")
+# Installing devtools if it's not already installed
+if(system.file(package="devtools") == ""){
+  install.packages("devtools") 
+}
+devtools::install_github("john-harrold/onbrand", dependencies=TRUE)
 ```
 
 ## Getting Started

@@ -1,3 +1,11 @@
+# onbrand 1.0.3
+
+## Table formatting
+
+* Added functions to take a large table and create smaller tables to span across multiple pages in reports (`span_table()` and `build_span()`)
+
+* Render markdown in specified part of a flext table (`ft_apply_md()`)
+
 # onbrand 1.0.2
 
 ## Changes to yaml file format
@@ -50,7 +58,7 @@ rpptx:
 
 ## Minor Improvements
 
-* Added `fig_start_at` and `tab_start_at` arguments to `report_add_doc_content()` to support this.
+* Added `fig_start_at` and `tab_start_at` arguments to `report_add_doc_content()` to support chapter specific numbering (e.g. Figure 3-1, Figure 3-2, Figure 4-1, etc).
 
 * Added notes option for tables and figures in Word reporting.
 
