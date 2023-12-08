@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, comment="")
 library(onbrand)
 library(officer)
 library(magrittr)
@@ -39,7 +39,7 @@ ex_yaml_read = yaml::read_yaml(ex_yaml_tmpfile)
 # b64_doc_workflow_output_png  = knitrdata::data_encode(if_doc_workflow_output_png , encoding="base64")
 ```
 
-# Introduction <img src="onbrand_hex.png" align="right" height="138.5" border="0px" />
+# Introduction
 
 The `officer` package is used to generate all of the underlying PowerPoint and Word documents. The purpose of `onbrand` is to provide an abstraction layer (or mapping) for the functions in `officer` in order to allow the same reporting workflow to be used with different template documents. This involves providing a consistent customizable method to interact with templates as well as a form of markdown to control the formatting of text. 
 
@@ -61,7 +61,7 @@ obnd = read_template(
        mapping  = file.path(system.file(package="onbrand"), "templates", "report.yaml"))
 ```
 
-### Adding content
+### Adding content to placeholders
 
 The mapping file (printed at the bottom of this document) uses descriptive names for slide masters and placeholders. Here is a snippet from our report `yaml`.
 ```{r echo=FALSE, comment='', message=TRUE, eval=TRUE}
@@ -222,6 +222,44 @@ obnd = report_add_slide(obnd,
                                    type         = "flextable_object")))
 ```
 
+### Adding content in user-defined locations
+
+If you want to place content in arbitrary locations on the slide you can use the `user_location` argument to `report_add_slide()`. The content and type is the same as above. You also need to supply a start and stop point. These are x-y coordinates as measured from the upper left point on the slide and they define the box where the content will be inserted. They represent fractions of the total slide width (x) and height (y):
+
+```{r}
+obnd = report_add_slide(obnd,
+  template = "two_content_header_list",
+  elements = list(
+     title         = list( content      = "Combining elements, user defined locations, and formatting",
+                           type         = "text")),
+  user_location = list(
+     txt_example   =
+       list( content        = fpar(ftext("This is formatted text", fp_text(color="green", font.size=24))),
+             type           = "text",
+             start          = c(0,  .25),
+             stop           = c(.25,.35)),
+     large_figure  =
+       list( content        = p,
+             type           = "ggplot",
+             start          = c(.25,.25),
+             stop           = c(.99,.99)),
+     flextable_obj  =
+       list( content        = tab_fto,
+             type           = "flextable_object",
+             start          = c(0,.75),
+             stop           = c(.25,.95)),
+     small_figure  =
+       list( content        = p,
+             type           = "ggplot",
+             start          = c(0,  .35),
+             stop           = c(.25,.74))
+  )
+)
+```
+
+Note that you can use both `elements` and `user_location` together. 
+
+
 ### Saving presentations 
 
 Once you are done adding content you can save the presentation to a file:
@@ -229,8 +267,8 @@ Once you are done adding content you can save the presentation to a file:
 ``` r
 save_report(obnd, "vignette_presentation.pptx")
 ```
-```{r, eval=FALSE, echo=FALSE}
-save_report(obnd, tempfile(fileext=".pptx")
+```{r, eval=TRUE, echo=FALSE, results='hide', message=FALSE}
+save_report(obnd,  file.path(tempdir(), "vignette_presentation.pptx"))
 ```
 
 Which should look something like this:

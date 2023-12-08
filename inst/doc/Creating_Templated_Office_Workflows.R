@@ -1,5 +1,5 @@
 ## ----setup, include=FALSE-----------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, comment="")
 library(onbrand)
 library(officer)
 library(magrittr)
@@ -131,8 +131,38 @@ obnd = report_add_slide(obnd,
      content_right         = list( content      = tab_fto,
                                    type         = "flextable_object")))
 
-## ---- eval=FALSE, echo=FALSE--------------------------------------------------
-#  save_report(obnd, tempfile(fileext=".pptx")
+## -----------------------------------------------------------------------------
+obnd = report_add_slide(obnd,
+  template = "two_content_header_list",
+  elements = list(
+     title         = list( content      = "Combining elements, user defined locations, and formatting",
+                           type         = "text")),
+  user_location = list(
+     txt_example   =
+       list( content        = fpar(ftext("This is formatted text", fp_text(color="green", font.size=24))),
+             type           = "text",
+             start          = c(0,  .25),
+             stop           = c(.25,.35)),
+     large_figure  =
+       list( content        = p,
+             type           = "ggplot",
+             start          = c(.25,.25),
+             stop           = c(.99,.99)),
+     flextable_obj  =
+       list( content        = tab_fto,
+             type           = "flextable_object",
+             start          = c(0,.75),
+             stop           = c(.25,.95)),
+     small_figure  =
+       list( content        = p,
+             type           = "ggplot",
+             start          = c(0,  .35),
+             stop           = c(.25,.74))
+  )
+)
+
+## ---- eval=TRUE, echo=FALSE, results='hide', message=FALSE--------------------
+save_report(obnd,  file.path(tempdir(), "vignette_presentation.pptx"))
 
 ## ---- message=TRUE------------------------------------------------------------
 details = template_details(obnd) 
