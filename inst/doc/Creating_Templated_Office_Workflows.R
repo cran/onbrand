@@ -161,10 +161,10 @@ obnd = report_add_slide(obnd,
   )
 )
 
-## ---- eval=TRUE, echo=FALSE, results='hide', message=FALSE--------------------
+## ----eval=TRUE, echo=FALSE, results='hide', message=FALSE---------------------
 save_report(obnd,  file.path(tempdir(), "vignette_presentation.pptx"))
 
-## ---- message=TRUE------------------------------------------------------------
+## ----message=TRUE-------------------------------------------------------------
 details = template_details(obnd) 
 
 ## -----------------------------------------------------------------------------
@@ -368,11 +368,11 @@ obnd = report_add_doc_content(obnd,
                   caption_format  = "text",
                   caption         = "Multi-page figure (page 2)"))
 
-## ---- eval=FALSE, echo=FALSE--------------------------------------------------
+## ----eval=FALSE, echo=FALSE---------------------------------------------------
 #  of = tempfile(fileext=".docx")
 #  save_report(obnd, of)
 
-## ---- message=TRUE------------------------------------------------------------
+## ----message=TRUE-------------------------------------------------------------
 details = template_details(obnd) 
 
 ## -----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ ex_yaml_read = yaml::read_yaml(ex_yaml_tmpfile)
 # b64_example_layout_yaml_pptx_png    = knitrdata::data_encode(if_example_layout_yaml_pptx_png  , encoding="base64")
 # b64_example_layout_docx_png         = knitrdata::data_encode(if_example_layout_docx_png       , encoding="base64")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(onbrand)
 #  file.copy(system.file(package="onbrand","examples","example.pptx"), ".", overwrite = TRUE)
 #  file.copy(system.file(package="onbrand","examples","example.docx"), ".", overwrite = TRUE)
