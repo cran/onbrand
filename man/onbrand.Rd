@@ -2,8 +2,8 @@
 % Please edit documentation in R/onbrand.R
 \docType{package}
 \name{onbrand}
-\alias{onbrand}
 \alias{onbrand-package}
+\alias{onbrand}
 \title{onbrand: officer Abstraction Layer for Organizational Templates}
 \description{
 The onbrand package creates an abstraction layer that is easily
@@ -18,7 +18,7 @@ reporting work flows across Word and PowerPoint templates.
 
 Authors:
 \itemize{
-  \item Bryan Smith \email{r.bryan.smith@gmail.com }
+  \item Bryan Smith \email{r.bryan.smith@gmail.com}
 }
 
 }
