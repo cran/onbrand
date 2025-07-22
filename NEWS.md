@@ -1,4 +1,9 @@
-# onbrand 1.0.6 (development version)
+# onbrand 1.0.7 (development version)
+
+* Added the ability to specify the rows (prows) and columns (pcols) when calling ft_apply_md()
+
+
+# onbrand 1.0.6 
 
 * Updated default PowerPoint template with a wider slide. 
 * Added function `mk_lg_tbl()` to create example datasets for demonstrating/testing span_table

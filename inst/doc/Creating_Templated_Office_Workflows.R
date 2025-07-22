@@ -2,7 +2,6 @@
 knitr::opts_chunk$set(echo = TRUE, comment="")
 library(onbrand)
 library(officer)
-library(magrittr)
 library(flextable)
 
 ex_yaml = "rpptx:
@@ -369,8 +368,8 @@ obnd = report_add_doc_content(obnd,
                   caption         = "Multi-page figure (page 2)"))
 
 ## ----eval=FALSE, echo=FALSE---------------------------------------------------
-#  of = tempfile(fileext=".docx")
-#  save_report(obnd, of)
+# of = tempfile(fileext=".docx")
+# save_report(obnd, of)
 
 ## ----message=TRUE-------------------------------------------------------------
 details = template_details(obnd) 
@@ -383,7 +382,7 @@ wsn = st$wsn
 dff = st$dff
 
 ## -----------------------------------------------------------------------------
-data = data.frame(property = c("mean",   "variance"),
+data = data.frame(property = c("**<ff:symbol>m</ff>**",   "**<ff:symbol>s</ff>**^**2**^"),
                   length     = c(200,      0.13),
                   width      = c(12,       0.05),
                   area       = c(240,      0.11),
@@ -392,42 +391,25 @@ data = data.frame(property = c("mean",   "variance"),
 
 ## -----------------------------------------------------------------------------
 header = list(property = c("",             ""),
-              length   = c("Length",       "cm"),
-              width    = c("Wdith",        "cm"),
-              area     = c("Area",         "cm2"),
-              volume   = c("Volume",       "cm3"))
+              length   = c("Length",       "**cm**"),
+              width    = c("Wdith",        "**cm**"),
+              area     = c("Area",         "**cm**^**2**^"),
+              volume   = c("Volume",       "**cm**^**3**^"))
 
-ft = flextable::flextable(data)                     %>% 
-     flextable::delete_part(part = "header")        %>%
-     flextable::add_header(values =as.list(header)) %>%
+ft = flextable::flextable(data)                     |> 
+     flextable::delete_part(part = "header")        |>
+     flextable::add_header(values =as.list(header)) |>
      flextable::theme_zebra()
 
 ## ----echo=FALSE---------------------------------------------------------------
 htmltools_value(ft)
 
-## -----------------------------------------------------------------------------
-dft      = fetch_md_def(obnd, style="Table_Labels")$md_def
-dft_body = fetch_md_def(obnd, style="Table")$md_def
-
-## -----------------------------------------------------------------------------
-ft = ft %>%
-  flextable::compose(j     = "area",
-          part  = "header", 
-          value = c(md_to_oo("Area", dft)$oo, md_to_oo("cm^2^", dft)$oo))   %>%
-  flextable::compose(j     = "volume", 
-          part  = "header",
-          value = c(md_to_oo("Volume", dft)$oo, md_to_oo("cm^3^", dft)$oo)) %>%
-  flextable::compose(j     = "property", 
-          i     = match("mean", data$property),                        
-          part  = "body",  
-          value = c(md_to_oo("**<ff:symbol>m</ff>**", dft_body)$oo))    %>%
-  flextable::compose(j     = "property",
-          i     = match("variance", data$property), 
-          part  = "body",                                                     
-          value = c(md_to_oo("**<ff:symbol>s</ff>**^**2**^", dft_body)$oo))
+## ----echo=TRUE----------------------------------------------------------------
+tab_fto = ft_apply_md(ft=ft, obnd=obnd, part = "header")
+tab_fto = ft_apply_md(ft=tab_fto, obnd=obnd, part = "body", pcols = 1)
 
 ## ----echo=FALSE---------------------------------------------------------------
-htmltools_value(ft)
+htmltools_value(tab_fto)
 
 ## -----------------------------------------------------------------------------
 obnd = report_add_doc_content(obnd,
