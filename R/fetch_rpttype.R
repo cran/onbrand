@@ -2,7 +2,7 @@
 #'@title Determines Type of Report Template
 #'@description  Based on the file extension for a template
 #'
-#'@param template Name of PowerPoint or Word file
+#'@param template Name of PowerPoint (pptx or potx) or Word (docx or dotx) file
 #'@param verbose Boolean variable when set to TRUE (default) messages will be
 #'displayed on the terminal; Messages will be included in the returned list.
 #'
@@ -30,11 +30,11 @@ fetch_rpttype = function(template= NULL, verbose=TRUE){
     isgood = FALSE
     msgs = c(msgs, "You must supply a file name")
   } else {
-    if(grepl(pattern="pptx$", template)){
+    if(grepl(pattern="potx$", template) | grepl(pattern="pptx$", template)){
       rpttype = "PowerPoint"
       rptext  = "pptx"
       rptobj  = "rpptx"
-    }else if(grepl(pattern="docx$", template)){
+    }else if(grepl(pattern="dotx$", template) | grepl(pattern="docx$", template)){
       rpttype = "Word"
       rptext  = "docx"
       rptobj  = "rdocx"

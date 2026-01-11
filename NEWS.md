@@ -1,7 +1,11 @@
-# onbrand 1.0.7 (development version)
+# onbrand 1.0.8 (development version)
 
-* Added the ability to specify the rows (prows) and columns (pcols) when calling ft_apply_md()
+* fixed use of `any()` where `NA` values were breaking things (e.g. `span_table()`)
 
+# onbrand 1.0.7 
+
+* Added the ability to specify the rows (prows) and columns (pcols) when calling `ft_apply_md()`.
+* Updated the default PowerPoint template to give more space to the main body of the slides. 
 
 # onbrand 1.0.6 
 
